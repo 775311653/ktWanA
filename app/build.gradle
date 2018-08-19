@@ -3,31 +3,102 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
         applicationId "com.mohe.ktwana"
-        minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary=true
+        multiDexEnabled true
+
+        ndk{
+            abiFilters 'armeabi'
+        }
     }
+
+    lintOptions{
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'CheckResult'
+    }
+
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true // 自动清理无用资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all {variant ->
+                variant.outputs.all {output ->
+                    def outputFile=output.outputFile
+                    if (outputFile!=null&&outputFile.name.endsWith('.apk')){
+                        def fileName="KtWanA_V${variant.versionName}_release_${getNowTime()}"
+                        outputFileName=fileName
+                    }
+                }
+            }
+        }
+        debug{
+            //在编译的时候可以对文件资源进行动态设置
+//            resValue("string","app_name","KtWanA_debug")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        debug { //密匙内容，请换成自己的
+
+        }
+        release {
+
+        }
+    }
+    //排除下列的文件进apk
+    packagingOptions{
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    dexOptions{
+        dexInProcess true
+        preDexLibraries true
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions{
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+//获取当前时间
+def static getNowTime(){
+    return new Date().format("yyyymmdd")
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    debugImplementation rootProject.ext.testDeps["leakcanary-debug"]
+    releaseImplementation rootProject.ext.testDeps["leakcanary-release"]
+
+    api rootProject.ext.supportLibs
+    implementation rootProject.ext.networkLibs
+    implementation rootProject.ext.rxJavaLibs
+    implementation rootProject.ext.commonLibs
+    kapt rootProject.ext.annotationProcessorLibs
+    implementation(rootProject.ext.otherDeps["glideOkhttp"]){
+        exclude group:'glide-parent'
+    }
+    debugImplementation rootProject.ext.testDeps["debug-db"]
 }
