@@ -7,6 +7,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
     defaultConfig {
         applicationId "com.mohe.ktwana"
         minSdkVersion rootProject.ext.android.minSdkVersion
@@ -19,6 +20,13 @@ android {
 
         ndk{
             abiFilters 'armeabi'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            jni.srcDirs = []
         }
     }
 
