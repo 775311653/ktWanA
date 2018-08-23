@@ -15,9 +15,14 @@
 
     <style name="BaseAppTheme.NoActionBar">
         <item name="android:windowActionBar">false</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <style name="SplashTheme" parent="BaseAppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
+    </style>
+    <!--浮动窗口动画-->
+    <style name="anim_float_view">
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_up_out</item>
     </style>
 </resources>
