@@ -15,10 +15,10 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary=true
+        vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
 
-        ndk{
+        ndk {
             abiFilters 'armeabi'
         }
     }
@@ -30,7 +30,7 @@ android {
         }
     }
 
-    lintOptions{
+    lintOptions {
         abortOnError false
         checkReleaseBuilds false
         disable 'CheckResult'
@@ -41,17 +41,17 @@ android {
             minifyEnabled true
             shrinkResources true // 自动清理无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all {variant ->
-                variant.outputs.all {output ->
-                    def outputFile=output.outputFile
-                    if (outputFile!=null&&outputFile.name.endsWith('.apk')){
-                        def fileName="KtWanA_V${variant.versionName}_release_${getNowTime()}"
-                        outputFileName=fileName
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "KtWanA_V${variant.versionName}_release_${getNowTime()}"
+                        outputFileName = fileName
                     }
                 }
             }
         }
-        debug{
+        debug {
             //在编译的时候可以对文件资源进行动态设置
 //            resValue("string","app_name","KtWanA_debug")
             minifyEnabled false
@@ -67,30 +67,30 @@ android {
         }
     }
     //排除下列的文件进apk
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
 
-    dexOptions{
+    dexOptions {
         dexInProcess true
         preDexLibraries true
         javaMaxHeapSize "4g"
     }
 
-    compileOptions{
+    compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
 //获取当前时间
-def static getNowTime(){
+def static getNowTime() {
     return new Date().format("yyyymmdd")
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
@@ -105,8 +105,8 @@ dependencies {
     implementation rootProject.ext.rxJavaLibs
     implementation rootProject.ext.commonLibs
     kapt rootProject.ext.annotationProcessorLibs
-    implementation(rootProject.ext.otherDeps["glideOkhttp"]){
-        exclude group:'glide-parent'
+    implementation(rootProject.ext.otherDeps["glideOkhttp"]) {
+        exclude group: 'glide-parent'
     }
     debugImplementation rootProject.ext.testDeps["debug-db"]
 }
