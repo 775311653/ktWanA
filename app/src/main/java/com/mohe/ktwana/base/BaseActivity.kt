@@ -12,7 +12,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
+import com.blankj.utilcode.util.SPUtils
 import com.mohe.ktwana.R
+import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.event.NetworkChangeEvent
 import com.mohe.ktwana.utils.SettingUtils
 import org.greenrobot.eventbus.EventBus
@@ -32,6 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var mLayoutParams:WindowManager.LayoutParams
 
     open lateinit var mContext:AppCompatActivity
+
 
     /**
      * 布局资源文件

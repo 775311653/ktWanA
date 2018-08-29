@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SPUtils
 import com.mohe.ktwana.MainActivity
 import com.mohe.ktwana.R
 import com.mohe.ktwana.base.BaseActivity
+import com.mohe.ktwana.constant.Constant
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity() {
@@ -18,6 +20,7 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initData() {
+        Constant.isLogin=SPUtils.getInstance().getBoolean(Constant.LOGIN_KEY)
     }
 
     override fun initView() {

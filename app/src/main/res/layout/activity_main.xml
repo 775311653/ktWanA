@@ -12,6 +12,10 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <include layout="@layout/main_fl_contain"/>
         <com.flyco.tablayout.CommonTabLayout
             android:id="@+id/main_tab"
             android:background="@color/line_divider"
@@ -22,9 +26,16 @@
             app:tl_iconHeight="@dimen/dp_20"
             app:tl_textSelectColor="@color/Light_Blue"
             app:tl_textUnselectColor="@color/textColorPrimary"
-            app:layout_behavior="com.mohe.ktwana.widget.behavior.BottomNavgationBehavior">
-
-        </com.flyco.tablayout.CommonTabLayout>
+            app:layout_behavior="com.mohe.ktwana.widget.behavior.BottomNavgationBehavior"/>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/main_floating_btn"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp_80"
+            android:layout_marginRight="@dimen/dp_20"
+            app:layout_behavior="com.mohe.ktwana.widget.behavior.ScaleDownShowBehavior"
+            app:srcCompat="@drawable/ic_arrow_upward_white_24dp"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
