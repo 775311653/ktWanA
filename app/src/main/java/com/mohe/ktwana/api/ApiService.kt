@@ -1,0 +1,28 @@
+package com.mohe.ktwana.api
+
+import com.mohe.ktwana.bean.HttpResult
+import io.reactivex.Observable
+import retrofit2.http.POST
+import retrofit2.http.Path
+
+/**
+ * Created by xiePing on 2018/9/1 0001.
+ * Description:
+ */
+interface ApiService {
+    /**
+     * 收藏站内文章
+     * http://www.wanandroid.com/lg/collect/1165/json
+     * @param id 文章id
+     */
+    @POST("/lg/collect/{id}/json")
+    fun addCollectArticle(@Path("id") id:Int):Observable<HttpResult<Any>>
+
+    /**
+     * 文章列表中取消收藏文章
+     * http://www.wanandroid.com/lg/uncollect_originId/2333/json
+     * @param id 文章id
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    fun cancelCollectArticle(@Path("id") id: Int):Observable<HttpResult<Any>>
+}
