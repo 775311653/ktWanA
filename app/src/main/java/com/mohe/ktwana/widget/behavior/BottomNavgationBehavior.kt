@@ -24,7 +24,7 @@ class BottomNavgationBehavior: CoordinatorLayout.Behavior<View> {
     override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: View, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type)
         if (dyConsumed>0){//手势向上滑，内容往下走
-            if (outAnimator==null){
+            if (!this::outAnimator.isInitialized){
                 outAnimator=ObjectAnimator.ofFloat(child,"translationY",0f,child.height.toFloat())
                 outAnimator.duration=200
             }
@@ -32,7 +32,7 @@ class BottomNavgationBehavior: CoordinatorLayout.Behavior<View> {
                 outAnimator.start()
             }
         }else if (dyConsumed<0){
-            if (inAnimator==null){
+            if (!this::inAnimator.isInitialized){
                 inAnimator=ObjectAnimator.ofFloat(child,"translationY",child.height.toFloat(),0f)
                 inAnimator.duration=200
             }

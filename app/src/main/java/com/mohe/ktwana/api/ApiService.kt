@@ -1,7 +1,10 @@
 package com.mohe.ktwana.api
 
+import com.mohe.ktwana.bean.ArticleResponseBean
+import com.mohe.ktwana.bean.BannerBean
 import com.mohe.ktwana.bean.HttpResult
 import io.reactivex.Observable
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -25,4 +28,19 @@ interface ApiService {
      */
     @POST("lg/uncollect_originId/{id}/json")
     fun cancelCollectArticle(@Path("id") id: Int):Observable<HttpResult<Any>>
+
+    /**
+     * 获取轮播图
+     * http://www.wanandroid.com/banner/json
+     */
+    @GET("banner/json")
+    fun getBanner():Observable<HttpResult<List<BannerBean>>>
+
+    /**
+     * 获取文章列表
+     * http://www.wanandroid.com/article/list/0/json
+     * @param pageNum
+     */
+    @GET("article/list/{pageNum}/json")
+    fun getArticles(@Path("pageNum") pageNum:Int):Observable<HttpResult<ArticleResponseBean>>
 }

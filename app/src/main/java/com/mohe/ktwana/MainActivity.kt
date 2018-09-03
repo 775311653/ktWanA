@@ -4,17 +4,21 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.blankj.utilcode.util.FragmentUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.mohe.ktwana.base.BaseActivity
 import com.mohe.ktwana.receiver.NetworkChangeReceiver
 import com.mohe.ktwana.R
 import com.mohe.ktwana.bean.TabEntity
+import com.mohe.ktwana.ui.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
     lateinit var netWorkReceiver: NetworkChangeReceiver
 
     var tabEntitys: ArrayList<CustomTabEntity> = arrayListOf()
+
+    private var homeFragment: HomeFragment? = null
 
     override fun attachLayoutRes(): Int=R.layout.activity_main
 
@@ -31,6 +35,21 @@ class MainActivity : BaseActivity() {
     override fun initView() {
         main_tab.setTabData(tabEntitys)
         main_tab.currentTab=0
+        refreshFragment(0)
+    }
+
+    private fun refreshFragment(index: Int) {
+        when(index){
+            0->{
+                if (homeFragment==null){
+                    homeFragment=HomeFragment()
+                    FragmentUtils.add(supportFragmentManager, homeFragment!!,R.id.main_fl_contain)
+                    FragmentUtils.show(homeFragment!!)
+                }else{
+                    FragmentUtils.show(homeFragment!!)
+                }
+            }
+        }
     }
 
     override fun start() {
