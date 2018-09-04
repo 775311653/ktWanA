@@ -31,7 +31,7 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun showSplashView() {
-        var anim = ObjectAnimator.ofFloat(splash_rl_parent, "alpha", 0.3f, 1.0f)
+        val anim = ObjectAnimator.ofFloat(splash_rl_parent, "alpha", 0.3f, 1.0f)
                 .setDuration(2000)
         anim.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(p0: Animator?) {
@@ -40,6 +40,7 @@ class SplashActivity : BaseActivity() {
             override fun onAnimationEnd(p0: Animator?) {
                 ActivityUtils.startActivity(MainActivity::class.java)
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out)
+                anim.cancel()
                 finish()
             }
 

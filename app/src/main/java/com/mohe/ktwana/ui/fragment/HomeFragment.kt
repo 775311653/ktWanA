@@ -45,7 +45,7 @@ class HomeFragment:BaseFragment(),HomeContract.View {
     private val linearLayoutManager=LinearLayoutManager(context)
 
     /**
-     * is Refresh
+     * true:下拉刷新    false:上拉加载
      */
     private var isRefresh = true
 
@@ -61,7 +61,7 @@ class HomeFragment:BaseFragment(),HomeContract.View {
             isAutoPlay(true)
         }
         swipeRefreshLayout.run {
-            setOnRefreshListener { onRefreshListener }
+            setOnRefreshListener(onRefreshListener)
         }
         homeAdapter=HomeAdapter(R.layout.item_home_list,datas)
         recyclerView.adapter=homeAdapter
@@ -117,6 +117,7 @@ class HomeFragment:BaseFragment(),HomeContract.View {
                 }
                 val size=it.size
                 if (size<articles.size){
+                    //数据到底，无法加载更多，参数表示是否显示无法加载更多的view,加载更多的时候显示，下拉刷新的时候不显示
                     loadMoreEnd(isRefresh)
                 }else{
                     loadMoreComplete()
