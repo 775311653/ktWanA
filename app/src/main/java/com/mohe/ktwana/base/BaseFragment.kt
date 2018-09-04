@@ -38,7 +38,7 @@ abstract class BaseFragment : Fragment() {
     abstract fun initView()
 
     /**
-     * 懒加载
+     * 懒加载,可以说是刷新界面
      */
     abstract fun lazyLoad()
 

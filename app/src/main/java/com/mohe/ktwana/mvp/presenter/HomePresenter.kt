@@ -42,6 +42,7 @@ class HomePresenter: CommonPresenter<HomeContract.View>(),HomeContract.Presenter
                         }else{
                             setArticles(it.data)
                         }
+                        hideLoading()
                     }
                 },{
                     mRootView?.run {

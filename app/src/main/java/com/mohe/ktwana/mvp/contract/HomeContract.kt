@@ -9,13 +9,14 @@ import com.mohe.ktwana.bean.BannerBean
  * Description:
  */
 interface HomeContract {
-    interface View:CommonContract.View{
+    interface View : CommonContract.View {
         fun scorllToTop()
-        fun setBanner(banneres:List<BannerBean>)
+        fun setBanner(banneres: List<BannerBean>)
         fun setArticles(articles: ArticleResponseBean)
     }
-    interface Presenter:CommonContract.Presenter<View>{
+
+    interface Presenter : CommonContract.Presenter<View> {
         fun requestBanner()
-        fun requestArticles(pageNum:Int)
+        fun requestArticles(pageNum: Int)
     }
 }
