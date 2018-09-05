@@ -58,8 +58,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             setSupportActionBar(this)
         }
         initDrawerLayout()
-        main_nav_view.getHeaderView(0).setOnClickListener(this)
         refreshFragment(0)
+        main_nav_view.getHeaderView(0).setOnClickListener(this)
+        val nav_username:TextView = main_nav_view.getHeaderView(0).findViewById(R.id.tv_user_name)
+        nav_username.text = if (!isLogin) {
+                getString(R.string.login)
+            } else {
+                userName
+            }
+
     }
 
 
