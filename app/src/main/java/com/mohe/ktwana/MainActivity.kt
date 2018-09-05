@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
@@ -14,14 +17,24 @@ import com.mohe.ktwana.base.BaseActivity
 import com.mohe.ktwana.receiver.NetworkChangeReceiver
 import com.mohe.ktwana.R
 import com.mohe.ktwana.bean.TabEntity
+import com.mohe.ktwana.constant.Constant
+import com.mohe.ktwana.event.LoginEvent
+import com.mohe.ktwana.ui.activity.LoginActivity
 import com.mohe.ktwana.ui.fragment.HomeFragment
+import com.mohe.ktwana.utils.Preference
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), View.OnClickListener {
+
+
     lateinit var netWorkReceiver: NetworkChangeReceiver
 
     var tabEntitys: ArrayList<CustomTabEntity> = arrayListOf()
+    private val userName:String by Preference(Constant.USERNAME_KEY, "")
 
     private var homeFragment: HomeFragment? = null
 
@@ -45,8 +58,7 @@ class MainActivity : BaseActivity() {
             setSupportActionBar(this)
         }
         initDrawerLayout()
-
-
+        main_nav_view.getHeaderView(0).setOnClickListener(this)
         refreshFragment(0)
     }
 
@@ -95,6 +107,14 @@ class MainActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onClick(p0: View?) {
+        if (p0==main_nav_view.getHeaderView(0)){
+            if (!isLogin){
+                ActivityUtils.startActivity(LoginActivity::class.java)
+            }
+        }
+    }
+
     /**
      * 注册网络监听
      */
@@ -103,6 +123,19 @@ class MainActivity : BaseActivity() {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
         netWorkReceiver=NetworkChangeReceiver()
         registerReceiver(netWorkReceiver, filter)
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    fun refreshLoginStatus(loginEvent: LoginEvent){
+        if (loginEvent.isLogin){
+            tv_user_name.text=userName
+            main_nav_view.findViewById<TextView>(R.id.nav_logout).visibility=View.VISIBLE
+            homeFragment?.lazyLoad()
+        }else{
+            tv_user_name.text=resources.getString(R.string.login)
+            main_nav_view.findViewById<TextView>(R.id.nav_logout).visibility=View.GONE
+            homeFragment?.lazyLoad()
+        }
     }
 
     override fun onDestroy() {

@@ -64,3 +64,14 @@ data class TagBean(
         val name: String,
         val url: String
 )
+
+// 登录数据
+data class LoginData(
+        val collectIds: List<Any>,
+        val email: String,
+        val icon: String,
+        val id: Int,
+        val password: String,
+        val type: Int,
+        val username: String
+)

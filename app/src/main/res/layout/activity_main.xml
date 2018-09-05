@@ -44,5 +44,9 @@
         android:id="@+id/main_nav_view"
         android:background="@color/viewBackground"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="@color/item_nav_color_tv"
+        app:itemTextColor="@color/item_nav_color_tv"
+        app:menu="@menu/nav_menu"/>
 </android.support.v4.widget.DrawerLayout>

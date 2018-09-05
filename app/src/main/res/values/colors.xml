@@ -65,4 +65,11 @@
     <color name="Grey700">#616161</color>
     <color name="Grey800">#424242</color>
     <color name="Grey900">#212121</color>
+
+    <color name="main_text_color">#555555</color>
+    <color name="main_text_color_blue">#2a7bbe</color>
+    <color name="main_text_color_gray">#8e8e93</color>
+    <color name="main_text_color_orange">#ff5b5b</color>
+    <color name="main_text_color_gray_light">#c7c7cd</color>
+    <color name="fengexiang">#d8d8d8</color>
 </resources>

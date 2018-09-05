@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.mohe.ktwana.R
 import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.event.NetworkChangeEvent
+import com.mohe.ktwana.utils.Preference
 import com.mohe.ktwana.utils.SettingUtils
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -26,6 +27,9 @@ import org.greenrobot.eventbus.ThreadMode
  * Description:
  */
 abstract class BaseActivity : AppCompatActivity() {
+
+    protected var isLogin:Boolean by Preference(Constant.LOGIN_KEY, false)
+
     /**
      * 提示view
      */
@@ -150,5 +154,9 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (useEventBus()) EventBus.getDefault().unregister(this)
+    }
 
 }

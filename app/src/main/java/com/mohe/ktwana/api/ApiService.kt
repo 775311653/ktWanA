@@ -3,10 +3,9 @@ package com.mohe.ktwana.api
 import com.mohe.ktwana.bean.ArticleResponseBean
 import com.mohe.ktwana.bean.BannerBean
 import com.mohe.ktwana.bean.HttpResult
+import com.mohe.ktwana.bean.LoginData
 import io.reactivex.Observable
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * Created by xiePing on 2018/9/1 0001.
@@ -43,4 +42,15 @@ interface ApiService {
      */
     @GET("article/list/{pageNum}/json")
     fun getArticles(@Path("pageNum") pageNum:Int):Observable<HttpResult<ArticleResponseBean>>
+
+    /**
+     * 登录
+     * http://www.wanandroid.com/user/login
+     * @param username
+     * @param password
+     */
+    @POST("user/login")
+    @FormUrlEncoded
+    fun loginWanAndroid(@Field("username") userName:String,
+                        @Field("password") password:String):Observable<HttpResult<LoginData>>
 }
