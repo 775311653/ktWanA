@@ -53,4 +53,16 @@ interface ApiService {
     @FormUrlEncoded
     fun loginWanAndroid(@Field("username") userName:String,
                         @Field("password") password:String):Observable<HttpResult<LoginData>>
+    /**
+     * 注册
+     * http://www.wanandroid.com/user/register
+     * @param username
+     * @param password
+     * @param repassword
+     */
+    @POST("user/register")
+    @FormUrlEncoded
+    fun registerWanAndroid(@Field("username") userName: String,
+                           @Field("password") password: String,
+                           @Field("repassword") repassword:String):Observable<HttpResult<LoginData>>
 }

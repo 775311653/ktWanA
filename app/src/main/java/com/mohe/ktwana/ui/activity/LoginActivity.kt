@@ -3,6 +3,8 @@ package com.mohe.ktwana.ui.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.mohe.ktwana.R
 import com.mohe.ktwana.base.BaseActivity
@@ -84,12 +86,29 @@ class LoginActivity : BaseActivity(),LoginContract.View, View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.btn_login->{
-                mPresenter.loginWanAndroid(et_user_name.text.toString(),et_password.text.toString())
+                if (validata()){
+                    mPresenter.loginWanAndroid(et_user_name.text.toString(),et_password.text.toString())
+                }
             }
             R.id.tv_sign_up->{
-
+                ActivityUtils.startActivity(RegisterActivity::class.java)
             }
         }
+    }
+
+    private fun validata(): Boolean {
+        var valid=true
+        val userName=et_user_name.text.toString()
+        val password=et_password.text.toString()
+        if (StringUtils.isEmpty(userName)){
+            et_user_name.error=getString(R.string.username_not_empty)
+            valid=false
+        }
+        if (StringUtils.isEmpty(password)){
+            et_password.error=getString(R.string.password_not_empty)
+            valid=false
+        }
+        return valid
     }
 
 
