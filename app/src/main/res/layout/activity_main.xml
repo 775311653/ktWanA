@@ -18,7 +18,7 @@
         <include layout="@layout/main_fl_contain"/>
         <com.flyco.tablayout.CommonTabLayout
             android:id="@+id/main_tab"
-            android:background="@color/line_divider"
+            android:background="@color/viewBackground"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
@@ -26,6 +26,7 @@
             app:tl_iconHeight="@dimen/dp_20"
             app:tl_textSelectColor="@color/Light_Blue"
             app:tl_textUnselectColor="@color/textColorPrimary"
+            app:tl_indicator_height="0dp"
             app:layout_behavior="com.mohe.ktwana.widget.behavior.BottomNavgationBehavior"/>
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"

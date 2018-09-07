@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatDelegate
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,7 @@ import com.mohe.ktwana.ui.activity.LoginActivity
 import com.mohe.ktwana.ui.fragment.HomeFragment
 import com.mohe.ktwana.utils.DialogUtils
 import com.mohe.ktwana.utils.Preference
+import com.mohe.ktwana.utils.SettingUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -131,10 +133,22 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+
+
     private val onDrawerNavgationItemSelectorListener= NavigationView.OnNavigationItemSelectedListener{
         when(it.itemId){
             R.id.nav_logout->{
                 logout()
+            }
+            R.id.nav_night_mode->{
+                if (SettingUtils.isNightMode()){
+                    SettingUtils.setNightMode(false)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                }else{
+                    SettingUtils.setNightMode(true)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                recreate()
             }
         }
         true
