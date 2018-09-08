@@ -33,7 +33,7 @@ object DialogUtils {
      * @param context
      * @return
      */
-    fun getDialog(context: Context):AlertDialog.Builder{
+    private fun getDialog(context: Context):AlertDialog.Builder{
         return AlertDialog.Builder(context)
     }
 
@@ -44,20 +44,5 @@ object DialogUtils {
         builder.setPositiveButton("确定",onClickListener)
         builder.setNegativeButton("取消",null)
         return builder
-    }
-
-    /**
-     * 获取一个耗时的对话框 ProgressDialog
-     *
-     * @param context
-     * @param message
-     * @return
-     */
-    fun getWaitDialog(context: Context,msg: String):ProgressDialog{
-        val progressDialog=ProgressDialog(context)
-        if (!StringUtils.isEmpty(msg)){
-            progressDialog.setMessage(msg)
-        }
-        return progressDialog
     }
 }

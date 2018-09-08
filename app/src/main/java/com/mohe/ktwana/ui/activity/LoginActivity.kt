@@ -111,5 +111,9 @@ class LoginActivity : BaseActivity(),LoginContract.View, View.OnClickListener {
         return valid
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.detachView()
+    }
 
 }

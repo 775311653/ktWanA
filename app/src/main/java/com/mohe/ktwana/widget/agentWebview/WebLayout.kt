@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import com.just.agentweb.IWebLayout
 import com.mohe.ktwana.R
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
  * Created by xiePing on 2018/9/7 0007.
@@ -16,10 +17,10 @@ class WebLayout: IWebLayout<WebView, ViewGroup> {
 
     lateinit var mActivity:Activity
     lateinit var mWebView:WebView
-    lateinit var parentView:ViewGroup
+    lateinit var parentView:SmartRefreshLayout
     constructor(activity: Activity){
         mActivity=activity
-        parentView= mActivity.layoutInflater.inflate(R.layout.fragment_smart_refresh_web,null) as ViewGroup
+        parentView= mActivity.layoutInflater.inflate(R.layout.fragment_smart_refresh_web,null) as SmartRefreshLayout
         mWebView=parentView.findViewById(R.id.webView)
     }
 

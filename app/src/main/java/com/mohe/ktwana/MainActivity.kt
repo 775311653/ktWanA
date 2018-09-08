@@ -42,9 +42,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     lateinit var netWorkReceiver: NetworkChangeReceiver
 
     var tabEntitys: ArrayList<CustomTabEntity> = arrayListOf()
-    private val userName:String by Preference(Constant.USERNAME_KEY, "")
+    private var userName:String by Preference(Constant.USERNAME_KEY, "")
 
     private var homeFragment: HomeFragment? = null
+
+    var mIndex=0
 
     override fun attachLayoutRes(): Int=R.layout.activity_main
 
@@ -66,7 +68,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             setSupportActionBar(this)
         }
         initDrawerLayout()
-        refreshFragment(0)
+        refreshFragment(main_tab.currentTab)
         main_nav_view.run {
             getHeaderView(0).setOnClickListener(this@MainActivity)
             val nav_username:TextView =getHeaderView(0).findViewById(R.id.tv_user_name)
@@ -77,6 +79,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             }
             setNavigationItemSelectedListener(onDrawerNavgationItemSelectorListener)
         }
+
+        main_floating_btn.setOnClickListener(onFABClickListener)
 
     }
 
@@ -104,6 +108,12 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     FragmentUtils.show(homeFragment!!)
                 }
             }
+        }
+    }
+
+    private val onFABClickListener=View.OnClickListener {
+        if (main_tab.currentTab==0){
+            homeFragment?.scorllToTop()
         }
     }
 
@@ -157,10 +167,11 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private fun logout() {
         DialogUtils.getConfirmDialog(this,getString(R.string.confirm_logout),
                 DialogInterface.OnClickListener{ _, _ ->//这是onClick方法里面的两个参数，没用到就不设置名字
-                    val waitDialog=DialogUtils.getWaitDialog(this,"")
+                    val waitDialog=DialogUtils.getLoadingDialog(this,"")
                     waitDialog.show()
                     doAsync {
                         isLogin=false
+                        userName=""
                         uiThread {
                             EventBus.getDefault().post(LoginEvent(false))
                             waitDialog.dismiss()

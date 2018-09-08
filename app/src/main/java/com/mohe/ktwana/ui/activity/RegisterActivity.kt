@@ -108,4 +108,9 @@ class RegisterActivity : BaseActivity(),RegisterContract.View {
     override fun showError(errorMsg: String) {
         ToastUtils.showShort(errorMsg)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mPresenter.detachView()
+    }
 }

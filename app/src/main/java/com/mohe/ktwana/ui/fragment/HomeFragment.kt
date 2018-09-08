@@ -1,8 +1,10 @@
 package com.mohe.ktwana.ui.fragment
 
+import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,9 +14,11 @@ import com.mohe.ktwana.base.BaseFragment
 import com.mohe.ktwana.bean.ArticleBean
 import com.mohe.ktwana.bean.ArticleResponseBean
 import com.mohe.ktwana.bean.BannerBean
+import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.mvp.contract.HomeContract
 import com.mohe.ktwana.mvp.presenter.HomePresenter
 import com.mohe.ktwana.rx.SchedulerUtils
+import com.mohe.ktwana.ui.activity.ContentActivity
 import com.mohe.ktwana.widget.BannerGlideLoad
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
@@ -175,8 +179,13 @@ class HomeFragment:BaseFragment(),HomeContract.View {
     }
 
     private val onItemClickListener=BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
-        if (datas.size!=0){
-            ToastUtils.showShort(datas.get(position).title)
+        val intent=Intent(activity,ContentActivity::class.java)
+        val articleBean:ArticleBean= datas[position]
+        intent.run {
+            putExtra(Constant.CONTENT_URL_KEY,articleBean.link)
+            putExtra(Constant.CONTENT_TITLE_KEY,articleBean.title)
+            putExtra(Constant.CONTENT_ID_KEY,articleBean.id)
+            ActivityUtils.startActivity(intent)
         }
     }
 

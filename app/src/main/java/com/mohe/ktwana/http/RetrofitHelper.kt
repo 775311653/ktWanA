@@ -90,7 +90,7 @@ object RetrofitHelper {
             val domain=request.url().host()
             if ((url.contains(HttpConstant.SAVE_USER_LOGIN_KEY)||
                             url.contains(HttpConstant.SAVE_USER_REGISTER_KEY))
-                            &&response.headers(HttpConstant.SET_COOKIE_KEY).isEmpty()){
+                            &&!response.headers(HttpConstant.SET_COOKIE_KEY).isEmpty()){
                 val cookies=response.headers(HttpConstant.SET_COOKIE_KEY)
                 saveCookie(url,domain,HttpConstant.encodeCookie(cookies))
             }
