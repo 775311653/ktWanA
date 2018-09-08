@@ -108,6 +108,14 @@ class HomeFragment:BaseFragment(),HomeContract.View {
                     banner.setImages(urls)
                     banner.setBannerTitles(titles)
                     banner.start()
+                    banner.setOnBannerListener {index->
+                        Intent(activity,ContentActivity::class.java).run{
+                            putExtra(Constant.CONTENT_TITLE_KEY,bannerDatas[index].title)
+                            putExtra(Constant.CONTENT_ID_KEY,bannerDatas[index].id)
+                            putExtra(Constant.CONTENT_URL_KEY,banneres[index].url)
+                            ActivityUtils.startActivity(this)
+                        }
+                    }
                 }
     }
 
