@@ -1,9 +1,6 @@
 package com.mohe.ktwana.api
 
-import com.mohe.ktwana.bean.ArticleResponseBean
-import com.mohe.ktwana.bean.BannerBean
-import com.mohe.ktwana.bean.HttpResult
-import com.mohe.ktwana.bean.LoginData
+import com.mohe.ktwana.bean.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -65,4 +62,20 @@ interface ApiService {
     fun registerWanAndroid(@Field("username") userName: String,
                            @Field("password") password: String,
                            @Field("repassword") repassword:String):Observable<HttpResult<LoginData>>
+
+    /**
+     * 获取知识体系
+     * http://www.wanandroid.com/tree/json
+     */
+    @GET("tree/json")
+    fun getKnowledgeTree():Observable<HttpResult<List<KnowledgeTreeBody>>>
+
+    /**
+     * 知识体系下的文章
+     * http://www.wanandroid.com/article/list/0/json?cid=168
+     * @param page
+     * @param cid
+     */
+    @POST("article/list/{page}/json")
+    fun getKnowledgeList(@Path("page") page:Int,@Field("cid") cid:Int):Observable<HttpResult<ArticleResponseBean>>
 }

@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatDelegate
 import android.view.Menu
@@ -16,6 +17,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.mohe.ktwana.base.BaseActivity
 import com.mohe.ktwana.receiver.NetworkChangeReceiver
 import com.mohe.ktwana.R
@@ -24,6 +26,7 @@ import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.event.LoginEvent
 import com.mohe.ktwana.ui.activity.LoginActivity
 import com.mohe.ktwana.ui.fragment.HomeFragment
+import com.mohe.ktwana.ui.fragment.KnowledgeTreeFragment
 import com.mohe.ktwana.utils.DialogUtils
 import com.mohe.ktwana.utils.Preference
 import com.mohe.ktwana.utils.SettingUtils
@@ -45,6 +48,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private var userName:String by Preference(Constant.USERNAME_KEY, "")
 
     private var homeFragment: HomeFragment? = null
+    private var knowledgeTreeFragment: KnowledgeTreeFragment? =null
 
     var mIndex=0
 
@@ -63,6 +67,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     override fun initView() {
         main_tab.setTabData(tabEntitys)
         main_tab.currentTab=0
+        main_tab.setOnTabSelectListener(onTabSelectListener)
         toolbar.run {
             title=getString(R.string.app_name)
             setSupportActionBar(this)
@@ -84,6 +89,18 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     }
 
+    private val onTabSelectListener:OnTabSelectListener=object: OnTabSelectListener{
+        //切换不同的标签
+        override fun onTabSelect(position: Int) {
+            refreshFragment(position)
+        }
+
+        //重点一次相同的标签
+        override fun onTabReselect(position: Int) {
+            refreshFragment(position)
+        }
+
+    }
 
     private fun initDrawerLayout() {
         main_drawer_layout.run {
@@ -99,13 +116,22 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private fun refreshFragment(index: Int) {
         when(index){
-            0->{
+            0->{//首页
                 if (homeFragment==null){
                     homeFragment=HomeFragment()
                     FragmentUtils.add(supportFragmentManager, homeFragment!!,R.id.main_fl_contain)
-                    FragmentUtils.show(homeFragment!!)
+                    FragmentUtils.showHide(homeFragment!!,FragmentUtils.getFragments(supportFragmentManager))
                 }else{
-                    FragmentUtils.show(homeFragment!!)
+                    FragmentUtils.showHide(homeFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }
+            }
+            1->{//知识体系
+                if (knowledgeTreeFragment==null){
+                    knowledgeTreeFragment= KnowledgeTreeFragment()
+                    FragmentUtils.add(supportFragmentManager, knowledgeTreeFragment!!,R.id.main_fl_contain)
+                    FragmentUtils.showHide(knowledgeTreeFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }else{
+                    FragmentUtils.showHide(knowledgeTreeFragment!!,FragmentUtils.getFragments(supportFragmentManager))
                 }
             }
         }

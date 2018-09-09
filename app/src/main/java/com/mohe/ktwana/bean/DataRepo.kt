@@ -75,3 +75,24 @@ data class LoginData(
         val type: Int,
         val username: String
 )
+
+//知识体系
+data class KnowledgeTreeBody(
+        val children: MutableList<Knowledge>,
+        val courseId: Int,
+        val id: Int,
+        val name: String,
+        val order: Int,
+        val parentChapterId: Int,
+        val visible: Int
+)
+
+data class Knowledge(
+        val children: List<Any>,
+        val courseId: Int,
+        val id: Int,
+        val name: String,
+        val order: Int,
+        val parentChapterId: Int,
+        val visible: Int
+)
