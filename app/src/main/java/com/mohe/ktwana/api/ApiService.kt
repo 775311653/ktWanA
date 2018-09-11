@@ -76,6 +76,6 @@ interface ApiService {
      * @param page
      * @param cid
      */
-    @POST("article/list/{page}/json")
-    fun getKnowledgeList(@Path("page") page:Int,@Field("cid") cid:Int):Observable<HttpResult<ArticleResponseBean>>
+    @GET("article/list/{page}/json")
+    fun getKnowledgeList(@Path("page") page:Int,@Query("cid") cid:Int):Observable<HttpResult<ArticleResponseBean>>
 }

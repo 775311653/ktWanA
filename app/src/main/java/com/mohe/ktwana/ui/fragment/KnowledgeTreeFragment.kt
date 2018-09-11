@@ -1,18 +1,22 @@
 package com.mohe.ktwana.ui.fragment
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.mohe.ktwana.R
 import com.mohe.ktwana.adapter.KnowledgeTreeAdapter
 import com.mohe.ktwana.base.BaseFragment
 import com.mohe.ktwana.bean.KnowledgeTreeBody
+import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.mvp.contract.KnowledgeTreeContract
 import com.mohe.ktwana.mvp.presenter.KnowledgeTreePresenter
+import com.mohe.ktwana.ui.activity.KnowledgeActivity
 import com.mohe.ktwana.utils.DialogUtils
 import com.mohe.ktwana.widget.RecyclerViewItemDecoration
 import kotlinx.android.synthetic.main.fragment_refresh_layout.*
@@ -48,12 +52,19 @@ class KnowledgeTreeFragment:BaseFragment(),KnowledgeTreeContract.View {
 
         adapter.run {
             onItemClickListener= this@KnowledgeTreeFragment.onItemClickListener
+            bindToRecyclerView(recyclerView)
+            setEmptyView(R.layout.fragment_empty_layout)
         }
+        swipeRefreshLayout.setOnRefreshListener { mPresenter.requestKnowledgeTree() }
     }
 
     private val onItemClickListener=BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
         val bean=datas[position]
-        ToastUtils.showShort(bean.name)
+        Intent(activity,KnowledgeActivity::class.java).run {
+            putExtra(Constant.CONTENT_TITLE_KEY,bean.name)
+            putExtra(Constant.CONTENT_DATA_KEY,bean)
+            ActivityUtils.startActivity(this)
+        }
     }
 
     override fun lazyLoad() {

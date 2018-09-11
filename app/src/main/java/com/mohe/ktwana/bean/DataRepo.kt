@@ -1,6 +1,7 @@
 package com.mohe.ktwana.bean
 
 import com.squareup.moshi.Json
+import java.io.Serializable
 
 /**
  * Created by xiePing on 2018/8/30 0030.
@@ -85,7 +86,7 @@ data class KnowledgeTreeBody(
         val order: Int,
         val parentChapterId: Int,
         val visible: Int
-)
+): Serializable
 
 data class Knowledge(
         val children: List<Any>,
@@ -95,4 +96,4 @@ data class Knowledge(
         val order: Int,
         val parentChapterId: Int,
         val visible: Int
-)
+): Serializable

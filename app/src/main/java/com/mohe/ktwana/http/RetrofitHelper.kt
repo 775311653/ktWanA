@@ -45,9 +45,10 @@ object RetrofitHelper {
     private fun getOkHttpClient(): OkHttpClient {
         val builder=OkHttpClient.Builder()
         val httpLoggingInterceptor=HttpLoggingInterceptor()
-        if (BuildConfig.DEBUG){
-            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
-        }else httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
+        httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
+//        if (BuildConfig.DEBUG){
+//            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
+//        }else httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
         val cacheFile=FileUtils.getFileByPath(Utils.getApp().cacheDir.absolutePath+"/retrofitCache/")
         val cache=Cache(cacheFile,1024*1024*50)//50M的缓存
         builder.run {
