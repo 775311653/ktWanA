@@ -86,7 +86,7 @@ class HomeFragment:BaseFragment(),HomeContract.View {
         mPresenter.requestArticles(0)
     }
 
-    override fun scorllToTop() {
+    override fun scrollToTop() {
         recyclerView.run {
             if (linearLayoutManager.findFirstVisibleItemPosition()>20){
                 scrollToPosition(0)

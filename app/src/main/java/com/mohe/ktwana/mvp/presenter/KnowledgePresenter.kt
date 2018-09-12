@@ -15,6 +15,7 @@ class KnowledgePresenter:CommonPresenter<KnowledgeContract.View>(),KnowledgeCont
     }
 
     override fun requestKnowledgeList(page: Int, cid: Int) {
+        mRootView?.showLoading()
         val disposable= model.requestKnowledgeList(page,cid)
                 .subscribe({
                     mRootView?.run {
@@ -23,10 +24,12 @@ class KnowledgePresenter:CommonPresenter<KnowledgeContract.View>(),KnowledgeCont
                         }else{
                             setKnowledgeList(it.data)
                         }
+                        hideLoading()
                     }
                 },{
                     mRootView?.run {
                         showError(ExceptionHandle.handleException(it))
+                        hideLoading()
                     }
                 })
         addSubscription(disposable)

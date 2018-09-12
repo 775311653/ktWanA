@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.event.EmptyEvent
+import com.mohe.ktwana.utils.Preference
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -16,6 +18,12 @@ import org.greenrobot.eventbus.ThreadMode
  * Description:
  */
 abstract class BaseFragment : Fragment() {
+
+    /**
+     * check login
+     */
+    protected var isLogin: Boolean by Preference(Constant.LOGIN_KEY, false)
+
     /**
      * 视图是否加载完毕
      */

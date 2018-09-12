@@ -3,10 +3,7 @@ package com.mohe.ktwana
 import android.content.DialogInterface
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatDelegate
 import android.view.Menu
@@ -20,7 +17,6 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.mohe.ktwana.base.BaseActivity
 import com.mohe.ktwana.receiver.NetworkChangeReceiver
-import com.mohe.ktwana.R
 import com.mohe.ktwana.bean.TabEntity
 import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.event.LoginEvent
@@ -138,8 +134,9 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     private val onFABClickListener=View.OnClickListener {
-        if (main_tab.currentTab==0){
-            homeFragment?.scorllToTop()
+        when(main_tab.currentTab){
+            0-> homeFragment?.scrollToTop()
+            1-> knowledgeTreeFragment?.scrollToTop()
         }
     }
 

@@ -10,7 +10,7 @@ import com.mohe.ktwana.bean.BannerBean
  */
 interface HomeContract {
     interface View : CommonContract.View {
-        fun scorllToTop()
+        fun scrollToTop()
         fun setBanner(banneres: List<BannerBean>)
         fun setArticles(articles: ArticleResponseBean)
     }

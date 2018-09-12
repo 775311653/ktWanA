@@ -1,8 +1,10 @@
 package com.mohe.ktwana.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.mohe.ktwana.R
@@ -13,6 +15,8 @@ import com.mohe.ktwana.bean.ArticleResponseBean
 import com.mohe.ktwana.constant.Constant
 import com.mohe.ktwana.mvp.contract.KnowledgeContract
 import com.mohe.ktwana.mvp.presenter.KnowledgePresenter
+import com.mohe.ktwana.ui.activity.ContentActivity
+import com.mohe.ktwana.ui.activity.LoginActivity
 import kotlinx.android.synthetic.main.fragment_refresh_layout.*
 
 /**
@@ -64,6 +68,8 @@ class KnowledgeFragment:BaseFragment(),KnowledgeContract.View {
 
         adapter.run {
             setOnLoadMoreListener(onRequestLoadMoreListener,recyclerView)
+            onItemClickListener=this@KnowledgeFragment.onItemClickListener
+            onItemChildClickListener=this@KnowledgeFragment.onItemChildClickListener
         }
 
         swipeRefreshLayout.run {
@@ -72,7 +78,37 @@ class KnowledgeFragment:BaseFragment(),KnowledgeContract.View {
         mPresenter.requestKnowledgeList(0,cid)
     }
 
+    private val onItemClickListener=BaseQuickAdapter.OnItemClickListener{adapter, view, position ->
+        val intent= Intent(activity, ContentActivity::class.java)
+        val articleBean:ArticleBean= datas[position]
+        intent.run {
+            putExtra(Constant.CONTENT_URL_KEY,articleBean.link)
+            putExtra(Constant.CONTENT_TITLE_KEY,articleBean.title)
+            putExtra(Constant.CONTENT_ID_KEY,articleBean.id)
+            ActivityUtils.startActivity(intent)
+        }
+    }
 
+    private val onItemChildClickListener=BaseQuickAdapter.OnItemChildClickListener{adapter, view, position ->
+        val articleBean=datas[position]
+        when(view.id){
+            R.id.iv_like->{
+                if (!isLogin){
+                    ActivityUtils.startActivity(LoginActivity::class.java)
+                    ToastUtils.showShort(R.string.login_tint)
+                    return@OnItemChildClickListener
+                }
+                if (articleBean.collect){
+                    mPresenter.cancelCollectArticle(articleBean.id)
+                    articleBean.collect=false
+                }else {
+                    mPresenter.addCollectArticle(articleBean.id)
+                    articleBean.collect=true
+                }
+                adapter.notifyDataSetChanged()
+            }
+        }
+    }
 
     override fun lazyLoad() {
     }
