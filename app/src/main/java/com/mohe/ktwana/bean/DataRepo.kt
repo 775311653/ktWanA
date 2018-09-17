@@ -97,3 +97,10 @@ data class Knowledge(
         val parentChapterId: Int,
         val visible: Int
 ): Serializable
+
+// 导航
+data class NavigationBean(
+        val articles: MutableList<ArticleBean>,
+        val cid: Int,
+        val name: String
+)

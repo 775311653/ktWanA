@@ -23,6 +23,7 @@ import com.mohe.ktwana.event.LoginEvent
 import com.mohe.ktwana.ui.activity.LoginActivity
 import com.mohe.ktwana.ui.fragment.HomeFragment
 import com.mohe.ktwana.ui.fragment.KnowledgeTreeFragment
+import com.mohe.ktwana.ui.fragment.NavigationFragment
 import com.mohe.ktwana.utils.DialogUtils
 import com.mohe.ktwana.utils.Preference
 import com.mohe.ktwana.utils.SettingUtils
@@ -45,6 +46,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
 
     private var homeFragment: HomeFragment? = null
     private var knowledgeTreeFragment: KnowledgeTreeFragment? =null
+    private var navigationFragment: NavigationFragment? =null
 
     var mIndex=0
 
@@ -130,6 +132,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     FragmentUtils.showHide(knowledgeTreeFragment!!,FragmentUtils.getFragments(supportFragmentManager))
                 }
             }
+            2->{
+                if (navigationFragment==null){
+                    navigationFragment= NavigationFragment()
+                    FragmentUtils.add(supportFragmentManager, navigationFragment!!,R.id.main_fl_contain)
+                    FragmentUtils.showHide(navigationFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }else{
+                    FragmentUtils.showHide(navigationFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }
+            }
         }
     }
 
@@ -137,6 +148,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         when(main_tab.currentTab){
             0-> homeFragment?.scrollToTop()
             1-> knowledgeTreeFragment?.scrollToTop()
+            2-> navigationFragment?.scrollToTop()
         }
     }
 

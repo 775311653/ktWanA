@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:text="@string/app_name"
+    android:background="@drawable/item_flow_selector"
+    android:gravity="center"
+    android:layout_margin="6dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:textColor="@color/title_black"
+    android:id="@+id/tv_common_title">
+
+</TextView>
