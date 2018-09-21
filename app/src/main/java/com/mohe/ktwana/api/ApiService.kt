@@ -86,5 +86,21 @@ interface ApiService {
     @GET("navi/json")
     fun getNavigationList():Observable<HttpResult<List<NavigationBean>>>
 
+    /**
+     * 项目数据
+     * http://www.wanandroid.com/project/tree/json
+     */
+    @GET("project/tree/json")
+    fun getProjectTree(): Observable<HttpResult<List<ProjectTreeBean>>>
+
+    /**
+     * 项目列表数据
+     * http://www.wanandroid.com/project/list/1/json?cid=294
+     * @param page
+     * @param cid
+     */
+    @GET("project/list/{page}/json")
+    fun getProjectList(@Path("page") page:Int,@Query("cid") cid:Int):Observable<HttpResult<ArticleResponseBean>>
+
 
 }

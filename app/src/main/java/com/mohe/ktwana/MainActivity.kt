@@ -24,6 +24,7 @@ import com.mohe.ktwana.ui.activity.LoginActivity
 import com.mohe.ktwana.ui.fragment.HomeFragment
 import com.mohe.ktwana.ui.fragment.KnowledgeTreeFragment
 import com.mohe.ktwana.ui.fragment.NavigationFragment
+import com.mohe.ktwana.ui.fragment.ProjectFragment
 import com.mohe.ktwana.utils.DialogUtils
 import com.mohe.ktwana.utils.Preference
 import com.mohe.ktwana.utils.SettingUtils
@@ -47,7 +48,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private var homeFragment: HomeFragment? = null
     private var knowledgeTreeFragment: KnowledgeTreeFragment? =null
     private var navigationFragment: NavigationFragment? =null
-
+    private var projecFragment: ProjectFragment?=null
     var mIndex=0
 
     override fun attachLayoutRes(): Int=R.layout.activity_main
@@ -141,6 +142,15 @@ class MainActivity : BaseActivity(), View.OnClickListener {
                     FragmentUtils.showHide(navigationFragment!!,FragmentUtils.getFragments(supportFragmentManager))
                 }
             }
+            3->{
+                if (projecFragment==null){
+                    projecFragment= ProjectFragment()
+                    FragmentUtils.add(supportFragmentManager, projecFragment!!,R.id.main_fl_contain)
+                    FragmentUtils.showHide(projecFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }else{
+                    FragmentUtils.showHide(projecFragment!!,FragmentUtils.getFragments(supportFragmentManager))
+                }
+            }
         }
     }
 
@@ -149,6 +159,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             0-> homeFragment?.scrollToTop()
             1-> knowledgeTreeFragment?.scrollToTop()
             2-> navigationFragment?.scrollToTop()
+            3-> projecFragment?.scrollToTop()
         }
     }
 
